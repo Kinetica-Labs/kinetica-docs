@@ -229,7 +229,8 @@ function opening(nodes) {
   const hero = make("div", { class: "hero" }, make("img", { src: "images/ui/first-result.png", alt: w.moving, width: "480", height: "233" }),
                     make("div", { class: "hero-say" }, nodes[at], make("div", { class: "nav" },
                          make("a", { class: "btn main", href: "#first", text: w.begin + " →" }), make("a", { class: "btn", href: "#map", text: w.browse }))));
-  return [...nodes.slice(0, at).filter(n => !n.querySelector?.("img")), hero, ...nodes.slice(at + 1), ...nodes.slice(0, at).filter(n => n.querySelector?.("img"))];
+  const picture = n => n.querySelector?.('img:not([height="22"])'); // an icon in a sentence does not make it a picture
+  return [...nodes.slice(0, at).filter(n => !picture(n)), hero, ...nodes.slice(at + 1), ...nodes.slice(0, at).filter(picture)];
 }
 
 // The first lesson: one step on the screen at a time.
