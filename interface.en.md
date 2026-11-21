@@ -223,7 +223,7 @@ The two large buttons of the card are the shape's roles.
 
 | Role | What it means |
 |---|---|
-| **<img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body** | a body: density, friction, restitution. The Body field chooses how it moves - see below |
+| **<img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body** | a body: density or a mass of its own, friction, restitution. The Body field chooses how it moves - see below |
 | **<img src="images/ui/icons/collider.png" height="22" alt=""> Collider** | what the body collides with; drawn as a green frame. Auto takes the shape's own form |
 | neither | geometry only: it is seen, but physics does not know it |
 
@@ -236,6 +236,36 @@ The Body field of the <img src="images/ui/icons/rigid.png" height="22" alt=""> R
 | **Dynamic** | physics moves it: it falls, collides, bounces | a crate, a ball, a robot's link |
 | **Kinematic** | it moves as it is set - by its velocity or by a sequence; it pushes others, and nothing pushes it | a conveyor, a door, a lift |
 | **Static** | it stands still | a wall, a table |
+
+### Glass and whatever is seen through
+
+The Opacity field of a shape's card: `1` is solid, less is see-through. That is how glass, a screen or a safety guard
+is made. It is the look only: physics takes such a shape as any other.
+
+### A zone: it notices and does not push
+
+The Zone tick of the <img src="images/ui/icons/collider.png" height="22" alt=""> Collider card makes an area of a shape: bodies pass through it, and it tells who stands inside.
+That is how a bin a part is to reach is made, or an area around a robot that nothing may enter.
+
+![The part fell into the zone, the ball missed](images/ui/en/zone.png)
+
+```python
+bin = scene.objects["Bin"]
+scene.play()
+scene.step(120)
+print(bin.inside)        # what stands in the zone now
+```
+
+### Who does not collide with whom
+
+A body can be taught not to notice others - by their tags:
+
+```python
+cover.tag("cover")
+part.ignores = ["cover"]   # the part passes through whatever is tagged "cover"
+```
+
+The rule works both ways. The links of one robot do not collide with each other without it.
 
 ### Tags
 
