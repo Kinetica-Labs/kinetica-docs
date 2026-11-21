@@ -28,3 +28,13 @@ python3 tools/build_site.py ../kinetica-docs   # собрать сайт в эт
 ```
 
 Нашли ошибку или непонятное место — откройте issue в этом репозитории.
+
+## Лицензия · License
+
+Текст и картинки этого репозитория — [Creative Commons Attribution 4.0](LICENSE) (CC BY 4.0): копируйте, переводите,
+переделывайте и публикуйте, в том числе в коммерческих материалах, — указав источник: «Kinetica Labs,
+https://kinetica-labs.github.io/kinetica-docs/».
+
+The text and the pictures of this repository are under [Creative Commons Attribution 4.0](LICENSE) (CC BY 4.0): copy,
+translate, adapt and publish them, commercially too - with the source named: "Kinetica Labs,
+https://kinetica-labs.github.io/kinetica-docs/".
