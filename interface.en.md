@@ -161,7 +161,7 @@ The toolbar is everything that creates and runs:
 
 | Buttons | What for |
 |---|---|
-| <img src="images/ui/icons/shape.png" height="22" alt=""> Shape, <img src="images/ui/icons/light.png" height="22" alt=""> Light, <img src="images/ui/icons/camera.png" height="22" alt=""> Camera, <img src="images/ui/icons/sensor.png" height="22" alt=""> Sensor | add to the scene |
+| <img src="images/ui/icons/shape.png" height="22" alt=""> Shape, <img src="images/ui/icons/light.png" height="22" alt=""> Light, <img src="images/ui/icons/camera.png" height="22" alt=""> Camera, <img src="images/ui/icons/sensor.png" height="22" alt=""> Sensor, <img src="images/ui/icons/force.png" height="22" alt=""> Force | add to the scene |
 | <img src="images/ui/icons/magnet.png" height="22" alt=""> Magnet | assemble a mechanism face to face |
 | <img src="images/ui/icons/play.png" height="22" alt=""> Play, <img src="images/ui/icons/record.png" height="22" alt=""> Record, <img src="images/ui/icons/pause.png" height="22" alt=""> Pause, <img src="images/ui/icons/stop.png" height="22" alt=""> Stop | the scene's time |
 | <img src="images/ui/icons/undo.png" height="22" alt=""> Undo, <img src="images/ui/icons/redo.png" height="22" alt=""> Redo | a step back and forward |
@@ -192,7 +192,7 @@ now. Four buttons in the top right corner hide and show the panels; `F11` leaves
 | Wheel | zoom |
 | `F` | frame the selection; `Home` - the whole scene |
 
-The habits of other programs are in Settings → Controls: Simple, Blender Style, Maya / Unity Style.
+The mouse layout is chosen in Settings → Controls.
 
 <a id="build"></a>
 
@@ -277,7 +277,7 @@ for target in scene.objects.tagged("target"):
     print(target.name)
 ```
 
-A tag goes on anything - a shape, a joint, a sensor, a light.
+A tag goes on anything - a shape, a joint, a sensor, a light, a force.
 
 ### Lights and cameras
 
@@ -285,6 +285,55 @@ A tag goes on anything - a shape, a joint, a sensor, a light.
 object.
 
 ![A sun, a lamp, a spot and a target camera](images/ui/en/lights.png)
+
+### Forces
+
+<img src="images/ui/icons/force.png" height="22" alt=""> Force ▾ puts what pushes bodies: once, or all the time. There are four kinds.
+
+![The Force menu: push, blast, thrust, pull](images/ui/en/force-menu.png)
+
+| | Once - an impulse | All the time - a force |
+|---|---|---|
+| **On one body** - an arrow | Push | Thrust |
+| **A field around a point** - a sphere | Blast | Pull |
+
+**A force on a body.** Select a body with the <img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body role and press Push or Thrust. The arrow stands at the body's
+centre of mass; the force acts on that body alone and rides on it.
+
+![A push on a cube: the orange point at the end of the arrow](images/ui/en/force-body.png)
+
+- **The orange point at the end of the arrow is the whole vector.** Drag it: where it points the force pushes, and the
+  arrow's length is its strength. A metre of arrow is 3 m/s of the body's velocity for a push and 10 m/s² of
+  acceleration for a thrust; a thrust up longer than a metre lifts the body.
+- **The gizmo moves the start of the arrow.** Off the centre of mass the force turns the body.
+- **A push fires once** - when the scene starts or at its own Time, s - and after that its arrow is gone in play until
+  the scene is stopped. A thrust acts all the time, and its arrow stays.
+- On a shape with no <img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body role the arrow is pale and the card says "no physics": give the role and the force is
+  live.
+
+**A field.** A Blast and a Pull act on every body whose centre is inside the sphere - light or heavy alike: a blast
+gives the bodies a velocity (6 m/s, weaker toward the sphere's edge), a pull an acceleration toward its point
+(15 m/s²). The sphere shows on the selected field; the orange point on it is the radius.
+
+![A blast beside a barrel: the sphere shows what it will reach](images/ui/en/force-blast.png)
+
+![Half a second after the start: the barrel is thrown](images/ui/en/force-blast-after.png)
+
+A Push and a Thrust made with no body selected are fields too: they push everything in their radius one way.
+
+**The force's card** says whose it is: "Body: Cube" or "Field". A force on a body has its strength as Impulse, N s or
+Strength, N; a field has Speed, m/s or Acceleration, m/s², and also Radius, Falloff (how the field weakens toward
+its edge) and Acts on - only bodies with that tag. The Fire button gives the impulse now, in the running scene.
+
+![The card of a push applied to a cube](images/ui/en/force-card.png)
+
+A robot does not look at a force: it learns of it only through its sensors - the IMU, the encoders, the effort.
+
+```python
+push = scene.add_force("directional", "impulse", body=cube)   # a push on a body: an arrow from its centre of mass
+boom = scene.add_force("radial", "impulse", at=(0, 0.5, 0), strength=6, radius=3)   # a blast: 6 m/s to all in the radius
+boom.fire()                                                    # in the running world, at once
+```
 
 ### Copies, groups, arrays
 
