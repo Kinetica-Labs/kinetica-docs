@@ -391,13 +391,15 @@ Three actions:
 2. Move the playhead and put the object elsewhere.
 3. Press Key again - between the keys the object travels by itself.
 
+Without Auto Key the order is: the playhead first, then the move, then Key - a key holds the pose the object has when it is put, and a seek puts the object back on its track. With ◈ Auto Key the order is shorter: switch it on, set the playhead and just move or turn the object - its key is put by itself (a sequence is made when there is none), and the move and its key are one undo step. The button is off by default.
+
 ![A cube travels between its keys](images/ui/en/sequencer.png)
 
 The object's track and its keys - the diamonds on the time scale:
 
 ![The Sequencer panel](images/ui/en/sequencer-panel.png)
 
-<img src="images/ui/icons/record.png" height="22" alt=""> Record (`Ctrl+R`) plays the scene and records the bodies' motion as a new sequence. Loop repeats the sequence.
+<img src="images/ui/icons/record.png" height="22" alt=""> Record (`Ctrl+R`) plays the scene and records the bodies' motion as a new sequence. The tracks of the sequence that played during the recording - a camera's keys, a light's - come along into the take: whether the camera or the physics comes first does not matter. Loop repeats the sequence.
 
 <a id="world"></a>
 
