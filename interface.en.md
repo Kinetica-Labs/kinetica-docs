@@ -223,9 +223,31 @@ The two large buttons of the card are the shape's roles.
 
 | Role | What it means |
 |---|---|
-| **<img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body** | a body that physics moves: density, friction, restitution. Static makes a wall or a table of it |
+| **<img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body** | a body: density, friction, restitution. The Body field chooses how it moves - see below |
 | **<img src="images/ui/icons/collider.png" height="22" alt=""> Collider** | what the body collides with; drawn as a green frame. Auto takes the shape's own form |
 | neither | geometry only: it is seen, but physics does not know it |
+
+### Three kinds of body
+
+The Body field of the <img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body card:
+
+| Kind | How it behaves | Example |
+|---|---|---|
+| **Dynamic** | physics moves it: it falls, collides, bounces | a crate, a ball, a robot's link |
+| **Kinematic** | it moves as it is set - by its velocity or by a sequence; it pushes others, and nothing pushes it | a conveyor, a door, a lift |
+| **Static** | it stands still | a wall, a table |
+
+### Tags
+
+The card of any object has a Tags field - words apart by spaces: `target`, `keep`, `robot-1`. By themselves they do
+nothing: scripts and plugins find the object by them.
+
+```python
+for target in scene.objects.tagged("target"):
+    print(target.name)
+```
+
+A tag goes on anything - a shape, a joint, a sensor, a light.
 
 ### Lights and cameras
 
@@ -430,7 +452,7 @@ Settings → Language switches the window between Russian and English. The mouse
 
 | What you see | Why, and what to do |
 |---|---|
-| An object does not fall | it has no <img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body role - or Static is ticked |
+| An object does not fall | it has no <img src="images/ui/icons/rigid.png" height="22" alt=""> Rigid Body role - or its Body field is not Dynamic |
 | A body falls through another | one of them has no <img src="images/ui/icons/collider.png" height="22" alt=""> Collider role |
 | After <img src="images/ui/icons/stop.png" height="22" alt=""> Stop everything came back | it is meant to. To keep it, press Keep Simulated Poses (`K`) on pause |
 | You lost an object from view | `F` - to the selection, `Home` - the whole scene |
