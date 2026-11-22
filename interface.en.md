@@ -2,6 +2,10 @@
 
 [Русский](interface.md) · **English**
 
+<video src="images/showcase.mp4" autoplay muted loop playsinline controls width="100%">
+<img src="images/showcase.gif" alt="The UR5e twirls the queen and mates, a ball on a pendulum breaks a tower of blocks">
+</video>
+
 An editor of robots: you assemble a mechanism from bodies, joints, motors and sensors, press <img src="images/ui/icons/play.png" height="22" alt=""> Play - and physics shows how it behaves.
 
 ![The Kinetica window with a UR5e arm](images/ui/en/window.png)
@@ -450,6 +454,8 @@ The object's track and its keys - the diamonds on the time scale:
 
 <img src="images/ui/icons/record.png" height="22" alt=""> Record (`Ctrl+R`) plays the scene and records the bodies' motion as a new sequence. The tracks of the sequence that played during the recording - a camera's keys, a light's - come along into the take: whether the camera or the physics comes first does not matter. Loop repeats the sequence.
 
+**Playback time.** The To field at the right of the panel sets how many seconds Play and Record run: at that time the scene pauses, and a recording ends by itself. With Loop on, the scene starts over instead of pausing. Its end is the grey flag on the time scale: drag it with the mouse. "No end" (0) - the scene plays until it is stopped.
+
 <a id="world"></a>
 
 ## 7. The world
@@ -549,3 +555,10 @@ python3 tools/ui_guide_shots.py en magnet    # one language, only the named grou
 
 The script starts the editor without showing a window, does every function by its operation and photographs the
 window with the `view_screenshot` operation. When the window changes, the pictures are retaken by one command.
+
+The film at the head of the guide is the scene of the plugin `showcase` from the kinetica-plugins repository: its
+panel «Витрина» has «Собрать сцену» (the arm, the chessboard, the pendulum, the tower, formulas, textures, lights, a
+keyed camera), then ▶. It is shot the same way, a frame at a time: `python3 tools/showcase_film.py --plugins ../kinetica-plugins`
+presses those two buttons, steps the simulation a frame and saves each - through the scene's camera (`view_through`,
+`view_screenshot {clean, marks: false}`) and as the editor's window -, then cuts the video and the GIF with ffmpeg into
+`build/showcase/`. Nothing is done to the picture; at the end the camera draws back out of the view to the whole window.
